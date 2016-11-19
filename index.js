@@ -15,11 +15,7 @@ fs.readFile('users.json', {encoding: 'utf-8'}, function(err, data) {
 })
 
 app.get('/', function(req, res) {
-  var buffer = ''
-  users.forEach(function(user) {
-    buffer += '<a href="/' + user.username + '">' + user.name.full + '</a><br>'
-  })
-  res.send(buffer)
+  res.render('index', {users: users})
 })
 
 app.get(/big.*/, function(req, res, next) {
@@ -31,6 +27,9 @@ app.get('/:username', function(req, res){
   var username = req.params.username
   res.send(username)
 })
+
+app.set('views', './views')
+app.set('view engine', 'hbs')
 
 var server = app.listen(3000, function() {
   console.log('Server running at http://localhost:' + server.address().port);
