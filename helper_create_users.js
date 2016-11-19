@@ -28,3 +28,14 @@ fs.writeFile('./users.json', JSON.stringify(users), function(err) {
   if (err) throw err
   console.log('Users created');
 })
+
+var copyFile = function(src, dst) {
+  fs.createReadStream(src).pipe(fs.createWriteStream(dst));
+}
+
+users.forEach(function(user) {
+  var srcBig = 'images/bg.png'
+  var srcSmall = 'images/sm.png'
+  copyFile(srcBig, 'images/' + user.username + '_bg.png')
+  copyFile(srcSmall, 'images/' + user.username + '_sm.png')
+})

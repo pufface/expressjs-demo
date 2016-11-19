@@ -18,18 +18,14 @@ app.get('/', function(req, res) {
   res.render('index', {users: users})
 })
 
-app.get(/big.*/, function(req, res, next) {
-  console.log('BIG USER ACCESS')
-  next()
-})
-
 app.get('/:username', function(req, res){
   var username = req.params.username
-  res.send(username)
+  res.render('user', {username: username})
 })
 
 app.set('views', './views')
 app.set('view engine', 'hbs')
+app.use('/profilepic', express.static('images'))
 
 var server = app.listen(3000, function() {
   console.log('Server running at http://localhost:' + server.address().port);
