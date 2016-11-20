@@ -67,19 +67,50 @@ var mergeUser = function(username, user, callback) {
   })
 }
 
+var verifyUser = function(req, res, next) {
+  var file = userFile(req.params.username)
+  fs.exists(file, function(exists) {
+    if (exists) {
+      next()
+    } else {
+      res.redirect('/error/' + req.params.username)
+    }
+  })
+}
+
 app.get('/', function(req, res) {
   readUsers(function(users) {
     res.render('index', {users: users})
   })
 })
 
-app.get('/:username', function(req, res) {
+app.all('/:username', function(req, res, next) {
+  console.log(req.method, 'for', req.params.username);
+  next()
+})
+
+app.get('*.json', function(req, res) {
+  res.download('./users/' + req.path)
+})
+
+app.get('/data/:username', function(req, res) {
+  var username = req.params.username
+  var user = getUser(username, function(user) {
+    res.json(user)
+  })
+})
+
+app.get('/:username', verifyUser, function(req, res) {
   getUser(req.params.username, function(user) {
     res.render('user', {
       user: user,
       address: user.location
     })
   })
+})
+
+app.get('/error/:username', function(req, res) {
+  res.status(404).send('No user named ' + req.params.username + ' found')
 })
 
 app.put('/:username', function(req, res) {
