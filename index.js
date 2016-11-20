@@ -13,6 +13,11 @@ app.use('/profilepic', express.static('images'))
 app.use('/js', express.static('js'))
 app.use('/:username', usernameRouter)
 
+app.use(function(req, res, next) {
+  console.log(new Date(), req.method, req.path, req.params);
+  next()
+})
+
 app.get('/', function(req, res) {
   helpers.readUsers(function(users) {
     res.render('index', {users: users})

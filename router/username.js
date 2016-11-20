@@ -5,7 +5,7 @@ var router = express.Router({
   mergeParams: true
 })
 
-router.all('/', function(req, res, next) {
+router.use(function(req, res, next) {
   console.log(req.method, 'for', req.params.username);
   next()
 })
