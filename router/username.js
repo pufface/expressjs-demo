@@ -24,10 +24,8 @@ router.get('/json', function(req, res) {
 })
 
 router.get('/data', function(req, res) {
-  var username = req.params.username
-  var user = helpers.getUser(username, function(user) {
-    res.json(user)
-  })
+  var readable = helpers.getUserStream(req.params.username)
+  readable.pipe(res)
 })
 
 router.put('/', function(req, res) {

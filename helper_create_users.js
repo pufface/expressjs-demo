@@ -39,6 +39,25 @@ var createUsers = function() {
   ]
 }
 
+var storeUser = function(dstDir) {
+  return function(user) {
+    var file = path.join(dstDir, user.username + '.json')
+    var data = JSON.stringify(user)
+    fs.writeFile(file, data, function(err) {
+      if (err) throw err
+      console.log('User ' + user.username + ' created')
+    })
+  }
+}
+
+var storeUsers = function(users, file) {
+  var data = JSON.stringify(users)
+  fs.writeFile(file, data, function(err) {
+    if (err) throw err
+    console.log('All users saved: ', file)
+  })
+}
+
 var copyFile = function(src, dst) {
   fs.createReadStream(src).pipe(fs.createWriteStream(dst));
 }
@@ -50,18 +69,8 @@ var copyUserImage = function(srcBig, srcSmall) {
   }
 }
 
-var storeUser = function(dstDir) {
-  return function(user) {
-    var file = path.join(dstDir, user.username + '.json')
-    var data = JSON.stringify(user)
-    fs.writeFile(file, data, function(err) {
-      if (err) throw err
-      console.log('User ' + user.username + ' created');
-    })
-  }
-}
-
 
 var users = createUsers()
 users.forEach(storeUser('users'))
 users.forEach(copyUserImage('images/bg.png', 'images/sm.png'))
+storeUsers(users, 'users.json')

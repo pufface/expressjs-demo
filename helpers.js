@@ -35,6 +35,14 @@ var getUser = function(username, callback) {
   readUser(getUserFilePath(username), callback)
 }
 
+var getUserStream = function(username) {
+  return fs.createReadStream(getUserFilePath(username))
+}
+
+var getUsersStream = function() {
+  return fs.createReadStream('users.json')
+}
+
 var deleteUser = function(username, callback) {
   fs.unlink(getUserFilePath(username), function(err) {
     if (err) throw err
@@ -71,6 +79,7 @@ var verifyUser = function(req, res, next) {
 
 exports.readUsers = readUsers
 exports.getUser = getUser
-exports.getUserFilePath = getUserFilePath
+exports.getUserStream = getUserStream
+exports.getUsersStream = getUsersStream
 exports.mergeUser = mergeUser
 exports.verifyUser = verifyUser

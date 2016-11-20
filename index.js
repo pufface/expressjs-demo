@@ -1,5 +1,6 @@
 var express = require('express')
 var bodyParser = require('body-parser')
+var JSONStream = require('JSONStream')
 var helpers = require('./helpers')
 var usernameRouter = require('./router/username')
 
@@ -16,6 +17,19 @@ app.get('/', function(req, res) {
   helpers.readUsers(function(users) {
     res.render('index', {users: users})
   })
+})
+
+app.get('/users/by/:gender', function(req, res) {
+  var gender = req.params.gender
+  var readable = helpers.getUsersStream()
+  readable
+    .pipe(JSONStream.parse('*', function(user) {
+      if (user.gender === gender) {
+        return user.name
+      }
+    }))
+    .pipe(JSONStream.stringify('[\n ', ',\n ', '\n]\n'))
+    .pipe(res)
 })
 
 app.get('/error/:username', function(req, res) {
