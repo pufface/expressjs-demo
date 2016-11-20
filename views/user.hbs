@@ -3,9 +3,89 @@
   <head>
     <meta charset="utf-8">
     <title>User Index</title>
+    <style>
+      .edit {
+        display: none;
+      }
+    </style>
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js" ></script>
+    <script type="text/javascript">
+      function edit() {
+        $('.view').hide()
+        $('.edit').show()
+      }
+
+      function cancel() {
+        $('.view').show()
+        $('.edit').hide()
+      }
+
+      function save() {
+        $.ajax('/{{user.username}}', {
+          method: 'PUT',
+          data: {
+            street: $('#street').val(),
+            city: $('#city').val(),
+            state: $('#state').val(),
+            zip: $('#zip').val()
+          },
+          complete: function() {
+            location.reload()
+          }
+        })
+      }
+
+      function del() {
+        $.ajax('/{{user.username}}', {
+          method: 'DELETE',
+          complete: function() {
+            location = '/'
+          }
+        })
+      }
+    </script>
   </head>
   <body>
-    <h1>{{username}}</h1>
-    <img src="/profilepic/{{username}}_bg.png" alt="">
+
+    <div>
+      <a href="/">Back to Users List</a>
+    <div>
+
+    <img src="/profilepic/{{user.username}}_bg.png" alt="">
+    <p>
+      <a href="#" onclick="edit()">Edit</a>
+      <a href="#" onclick="del()">Delete</a>
+    </p>
+
+    <h1>{{user.name.full}}</h1>
+    <dl>
+      <dt>Street</dt>
+      <dd class="view">{{address.street}}</dd>
+      <dd class="edit">
+        <input id="street" type="text" value="{{address.street}}">
+      </dd>
+      <dt>City</dt>
+      <dd class="view">{{address.city}}</dd>
+      <dd class="edit">
+        <input id="city" type="text" value="{{address.city}}">
+      </dd>
+      <dt>State</dt>
+      <dd class="view">{{address.state}}</dd>
+      <dd class="edit">
+        <input id="state" type="text" value="{{address.state}}">
+      </dd>
+      <dt>Zip</dt>
+      <dd class="view">{{address.zip}}</dd>
+      <dd class="edit">
+        <input id="zip" type="text" value="{{address.zip}}">
+      </dd>
+
+      <br>
+      <dt></dt>
+      <dd class="edit">
+        <input type="submit" value="Save" onclick="save()">
+        <input type="submit" value="Cancel" onclick="cancel()">
+      </dd>
+    </dl>
   </body>
 </html>
