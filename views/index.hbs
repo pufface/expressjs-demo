@@ -9,7 +9,7 @@
     {{#each users as |user|}}
     <div>
         <img src="/profilepic/{{user.username}}_sm.png" alt="">
-        <a href="/{{user.username}}">{{user.name.full}}</a>
+        <a href="/{{user.username}}">{{user.name.first}} {{user.name.last}}</a>
     </div>
     {{/each}}
   </body>

@@ -3,6 +3,7 @@ var bodyParser = require('body-parser')
 var JSONStream = require('JSONStream')
 var helpers = require('./helpers')
 var usernameRouter = require('./router/username')
+var User = require('./db').User
 
 var app = express()
 app.set('views', './views')
@@ -19,7 +20,7 @@ app.use(function(req, res, next) {
 })
 
 app.get('/', function(req, res) {
-  helpers.readUsers(function(users) {
+  User.find({}, function(err, users) {
     res.render('index', {users: users})
   })
 })

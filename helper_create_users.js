@@ -50,6 +50,16 @@ var storeUser = function(dstDir) {
   }
 }
 
+var storeUserList = function(users, file) {
+  var writable = fs.createWriteStream(file)
+  users.forEach(function(user) {
+    writable.write(JSON.stringify(user))
+    writable.write('\n')
+  })
+  writable.end()
+  console.log('Mongodb export is done')
+}
+
 var storeUsers = function(users, file) {
   var data = JSON.stringify(users)
   fs.writeFile(file, data, function(err) {
@@ -74,3 +84,4 @@ var users = createUsers()
 users.forEach(storeUser('users'))
 users.forEach(copyUserImage('images/bg.png', 'images/sm.png'))
 storeUsers(users, 'users.json')
+storeUserList(users, 'users_list.json')
