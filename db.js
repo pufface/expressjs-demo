@@ -26,6 +26,16 @@ var userSchema = mongoose.Schema({
   }
 })
 
+userSchema.virtual('name.full').get(function(){
+  return this.name.first + ' ' + this.name.last
+})
+
+userSchema.virtual('name.full').set(function(value) {
+  var bits = value.split(' ')
+  this.name.first = bits[0]
+  this.name.last = bits[1]
+})
+
 exports.User = mongoose.model('User', userSchema)
 
 
