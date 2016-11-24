@@ -79,7 +79,6 @@ var copyUserImage = function(srcBig, srcSmall) {
   }
 }
 
-
 var users = createUsers()
 // users.forEach(storeUser('users'))
 users.forEach(copyUserImage('public/profilepics/bg.png', 'public/profilepics/sm.png'))

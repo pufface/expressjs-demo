@@ -3,7 +3,7 @@ var bodyParser = require('body-parser')
 var JSONStream = require('JSONStream')
 
 var connection = require('./db')
-var rootController = require('./controller/root')
+var rootController = require('./controller/home')
 var userController = require('./controller/user')
 
 
