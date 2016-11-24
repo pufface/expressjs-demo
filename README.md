@@ -150,3 +150,6 @@ Virtual properties are defined by getters and setters on mongoose schema.
 ## Debug
 Debug stand alone js file `>node-debug helper_create_users.js`.
 Debug nodemon: `>npm run debug` and run in separate console `>node-inspector`.
+
+## See also
+https://github.com/sahat/hackathon-starter
