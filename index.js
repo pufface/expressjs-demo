@@ -1,45 +1,35 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var JSONStream = require('JSONStream')
-var helpers = require('./helpers')
-var usernameRouter = require('./router/username')
-var User = require('./db').User
+
+var connection = require('./db')
+var rootController = require('./controller/root')
+var userController = require('./controller/user')
+
 
 var app = express()
 app.set('views', './views')
 app.set('view engine', 'hbs')
+
+app.use('/public', express.static('./public'))
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
-app.use('/profilepic', express.static('images'))
-app.use('/js', express.static('js'))
-app.use('/:username', usernameRouter)
 
+
+// keep first in app stack
 app.use(function(req, res, next) {
   console.log(new Date(), req.method, req.path, req.params);
   next()
 })
 
-app.get('/', function(req, res) {
-  User.find({}, function(err, users) {
-    res.render('index', {users: users})
-  })
-})
+app.use('/', rootController)
+app.use('/:username', userController)
 
-app.get('/users/by/:gender', function(req, res) {
-  var gender = req.params.gender
-  var readable = helpers.getUsersStream()
-  readable
-    .pipe(JSONStream.parse('*', function(user) {
-      if (user.gender === gender) {
-        return user.name
-      }
-    }))
-    .pipe(JSONStream.stringify('[\n ', ',\n ', '\n]\n'))
-    .pipe(res)
-})
 
-app.get('/error/:username', function(req, res) {
-  res.status(404).send('No user named ' + req.params.username + ' found')
+// keep at the end of app stack
+app.use(function(err, req, res, next) {
+  console.error(err.stack)
+  res.status(500).send(err.stack)
 })
 
 var server = app.listen(3000, function() {

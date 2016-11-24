@@ -1,64 +1,24 @@
 var mongoose = require('mongoose')
+var connection = mongoose.connection
+var Schema = mongoose.Schema
 
 var uri = 'mongodb://localhost:27017/test'
 
-var db = mongoose.connect(uri).connection
-
-db.on('error', console.error.bind(console, 'connection error:'))
-db.once('open', function(callback) {
-  console.log('db connected')
+mongoose.connect(uri, function(err) {
+  if (err) throw err
 })
 
-var userSchema = mongoose.Schema({
-  username: String,
-  gender: String,
-  name: {
-    title: String,
-    first: String,
-    last: String
-  },
-  email: String,
-  location: {
-    state: String,
-    city: String,
-    street: String,
-    zip: String
-  }
+connection.on('error', console.error.bind(console, 'db connection error:'))
+connection.on('open', console.log.bind(console, 'db connection opened'))
+connection.on('connected', console.log.bind(console, 'db conected'))
+connection.on('disconnected', function() {
+  throw new Error('DB connection lost')
 })
 
-userSchema.virtual('name.full').get(function(){
-  return this.name.first + ' ' + this.name.last
+process.on('SIGINT', function () {
+  connection.close(function(){
+    process.exit(0)
+  })
 })
 
-userSchema.virtual('name.full').set(function(value) {
-  var bits = value.split(' ')
-  this.name.first = bits[0]
-  this.name.last = bits[1]
-})
-
-exports.User = mongoose.model('User', userSchema)
-
-
-// Useage of pure MongoClient
-// var mongodb = require('mongodb')
-//
-// var uri = 'mongodb://localhost:27017/test'
-//
-// var MongoClient = mongodb.MongoClient
-//
-// var findUsers = function(db, callback) {
-//   var cursor = db.collection('users').find()
-//   cursor.each(function(err, doc) {
-//     if (doc != null) {
-//       console.dir(doc)
-//     } else {
-//       callback()
-//     }
-//   })
-// }
-//
-// MongoClient.connect(uri, function(err, db) {
-//   findUsers(db, function() {
-//     db.close()
-//   })
-// })
+module.exports = connection

@@ -5,10 +5,10 @@
     <title>User Index</title>
   </head>
   <body>
-    <h1>Handlebars</h1>
+    <h1>Users</h1>
     {{#each users as |user|}}
     <div>
-        <img src="/profilepic/{{user.username}}_sm.png" alt="">
+        <img src="/public/profilepics/{{user.username}}_sm.png" alt="">
         <a href="/{{user.username}}">{{user.name.full}}</a>
     </div>
     {{/each}}

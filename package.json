@@ -6,7 +6,10 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "debug": "nodemon --debug index.js"
+    "debug": "nodemon --debug index.js",
+    "mock": "node helper_create_users.js", 
+    "importdb": "mongoimport --db test --dbpath mongo --collection users --drop --file users_list.json",
+    "db": "mongod --dbpath mongo"
   },
   "keywords": [],
   "author": "",

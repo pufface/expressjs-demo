@@ -74,14 +74,14 @@ var copyFile = function(src, dst) {
 
 var copyUserImage = function(srcBig, srcSmall) {
   return function(user) {
-    copyFile(srcBig, 'images/' + user.username + '_bg.png')
-    copyFile(srcSmall, 'images/' + user.username + '_sm.png')
+    copyFile(srcBig, 'public/profilepics/' + user.username + '_bg.png')
+    copyFile(srcSmall, 'public/profilepics/' + user.username + '_sm.png')
   }
 }
 
 
 var users = createUsers()
-users.forEach(storeUser('users'))
-users.forEach(copyUserImage('images/bg.png', 'images/sm.png'))
-storeUsers(users, 'users.json')
+// users.forEach(storeUser('users'))
+users.forEach(copyUserImage('public/profilepics/bg.png', 'public/profilepics/sm.png'))
+// storeUsers(users, 'users.json')
 storeUserList(users, 'users_list.json')

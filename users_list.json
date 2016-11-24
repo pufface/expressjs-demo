@@ -1,7 +1,7 @@
 {"gender":"male","name":{"title":"mr","first":"Mary","last":"Jones"},"username":"maryjones","email":"Mary.Jones@mail.com","location":{"state":"state1","city":"city1","street":"street1","zip":"zip1"}}
 {"gender":"female","name":{"title":"miss","first":"Alan","last":"Walter"},"username":"alanwalter","email":"Alan.Walter@mail.com","location":{"state":"state2","city":"city2","street":"street2","zip":"zip2"}}
 {"gender":"male","name":{"title":"mr","first":"Miriam","last":"Wallace"},"username":"miriamwallace","email":"Miriam.Wallace@mail.com","location":{"state":"state3","city":"city3","street":"street3","zip":"zip3"}}
-{"gender":"male","name":{"title":"mr","first":"william","last":"Ryan"},"username":"williamryan","email":"william.Ryan@mail.com","location":{"state":"state4","city":"city4","street":"street4","zip":"zip4"}}
-{"gender":"male","name":{"title":"mr","first":"Gail","last":"Morales"},"username":"gailmorales","email":"Gail.Morales@mail.com","location":{"state":"state5","city":"city5","street":"street5","zip":"zip5"}}
+{"gender":"female","name":{"title":"mrs","first":"william","last":"Ryan"},"username":"williamryan","email":"william.Ryan@mail.com","location":{"state":"state4","city":"city4","street":"street4","zip":"zip4"}}
+{"gender":"female","name":{"title":"miss","first":"Gail","last":"Morales"},"username":"gailmorales","email":"Gail.Morales@mail.com","location":{"state":"state5","city":"city5","street":"street5","zip":"zip5"}}
 {"gender":"male","name":{"title":"mr","first":"Big","last":"First"},"username":"bigfirst","email":"Big.First@mail.com","location":{"state":"state6","city":"city6","street":"street6","zip":"zip6"}}
-{"gender":"female","name":{"title":"miss","first":"Big","last":"Second"},"username":"bigsecond","email":"Big.Second@mail.com","location":{"state":"state7","city":"city7","street":"street7","zip":"zip7"}}
+{"gender":"male","name":{"title":"mr","first":"Big","last":"Second"},"username":"bigsecond","email":"Big.Second@mail.com","location":{"state":"state7","city":"city7","street":"street7","zip":"zip7"}}
