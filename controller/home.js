@@ -5,9 +5,9 @@ var router = express.Router({
   mergeParams: true
 })
 
-router.get('/', function(req, res, next) {
-  User.find({}, function(err, users) {
-    if (err) next(err)
+router.get('/', (req, res, next) => {
+  User.find({}, (err, users) => {
+    if (err) return next(err)
     res.render('user-list', {users: users})
   })
 })

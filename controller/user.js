@@ -5,50 +5,50 @@ var router = express.Router({
   mergeParams: true
 })
 
-router.get('/', function(req, res) {
+router.get('/', (req, res) => {
   var username = req.params.username
-  User.findOne({username: username}, function(err, user) {
-    if (err) next(err)
+  User.findOne({username}, (err, user) => {
+    if (err) return next(err)
     res.render('user-detail', {
-      user: user,
+      user,
       address: user.location
     })
   })
 })
 
-router.put('/', function(req, res) {
+router.put('/', (req, res) => {
   var username = req.params.username
-  User.findOne({username: username}, function(err, user) {
-    if (err) next(err)
+  User.findOne({username}, (err, user) => {
+    if (err) return next(err)
     user.name.full = req.body.name
     user.location = req.body.location
-    user.save(function(err, data) {
+    user.save((err, data) => {
       res.end()
     })
   })
 })
 
-router.get('/json', function(req, res) {
+router.delete('/', (req, res) => {
   var username = req.params.username
-  User.findOne({username: username}, function(err, user) {
-    if (err) next(err)
+  User.findOneAndRemove({username}, (err) => {
+    if (err) return next(err)
+    res.sendStatus(200)
+  })
+})
+
+router.get('/json', (req, res) => {
+  var username = req.params.username
+  User.findOne({username}, (err, user) => {
+    if (err) return next(err)
     res.json(user)
   })
 })
 
-router.get('/data', function(req, res) {
+router.get('/data', (req, res) => {
   var username = req.params.username
-  User.findOne({username: username}, function(err, user) {
-    if (err) next(err)
+  User.findOne({username}, (err, user) => {
+    if (err) return next(err)
     res.type('bin').send(JSON.stringify(user))
-  })
-})
-
-router.delete('/', function(req, res) {
-  var username = req.params.username
-  User.findOneAndRemove({username: username}, function(err){
-    if (err) next(err)
-    res.sendStatus(200)
   })
 })
 

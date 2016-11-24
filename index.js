@@ -17,7 +17,7 @@ app.use(bodyParser.json())
 
 
 // keep first in app stack
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   console.log(new Date(), req.method, req.path, req.params);
   next()
 })
@@ -27,11 +27,11 @@ app.use('/:username', userController)
 
 
 // keep at the end of app stack
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   console.error(err.stack)
   res.status(500).send(err.stack)
 })
 
-var server = app.listen(3000, function() {
-  console.log('Server running at http://localhost:' + server.address().port);
+app.listen(3000, () => {
+  console.log('Server running at http://localhost:3000');
 })

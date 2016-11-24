@@ -143,6 +143,10 @@ Virtual properties are defined by getters and setters on mongoose schema.
 
 `>git checkout 11-express-mongoose-virtualprops`
 
+## 12 Refactoring + ES6 Syntax
+
+`>git checkout 12-refactor-es6`
+
 ## Debug
 Debug stand alone js file `>node-debug helper_create_users.js`.
 Debug nodemon: `>npm run debug` and run in separate console `>node-inspector`.

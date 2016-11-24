@@ -1,7 +1,7 @@
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 
-var user = new Schema({
+var userSchema = new Schema({
   username: String,
   gender: String,
   name: {
@@ -18,14 +18,14 @@ var user = new Schema({
   }
 })
 
-user.virtual('name.full').get(function(){
+userSchema.virtual('name.full').get(function() {
   return this.name.first + ' ' + this.name.last
 })
 
-user.virtual('name.full').set(function(value) {
+userSchema.virtual('name.full').set(function(value) {
   var bits = value.split(' ')
   this.name.first = bits[0]
   this.name.last = bits[1]
 })
 
-module.exports = mongoose.model('User', user)
+module.exports = mongoose.model('User', userSchema)

@@ -2,9 +2,9 @@ var fs = require('fs')
 var path = require('path')
 var _ = require('lodash')
 
-var usersGenerator = function() {
+var usersGenerator = () => {
   var counter = 0
-  return function(firstName, lastName) {
+  return (firstName, lastName) => {
     var isFemale = Math.random() > 0.5
     counter += 1
     return {
@@ -26,7 +26,7 @@ var usersGenerator = function() {
   }
 }
 
-var createUsers = function() {
+var createUsers = () => {
   var createUser = usersGenerator()
   return [
     createUser('Mary', 'Jones'),
@@ -39,20 +39,18 @@ var createUsers = function() {
   ]
 }
 
-var storeUser = function(dstDir) {
-  return function(user) {
-    var file = path.join(dstDir, user.username + '.json')
-    var data = JSON.stringify(user)
-    fs.writeFile(file, data, function(err) {
-      if (err) throw err
-      console.log('User ' + user.username + ' created')
-    })
-  }
+var storeUser = (dstDir) => (user) => {
+  var file = path.join(dstDir, user.username + '.json')
+  var data = JSON.stringify(user)
+  fs.writeFile(file, data, (err) => {
+    if (err) throw err
+    console.log('User ' + user.username + ' created')
+  })
 }
 
-var storeUserList = function(users, file) {
+var storeUserList = (users, file) => {
   var writable = fs.createWriteStream(file)
-  users.forEach(function(user) {
+  users.forEach((user) => {
     writable.write(JSON.stringify(user))
     writable.write('\n')
   })
@@ -60,23 +58,21 @@ var storeUserList = function(users, file) {
   console.log('Mongodb export is done')
 }
 
-var storeUsers = function(users, file) {
+var storeUsers = (users, file) => {
   var data = JSON.stringify(users)
-  fs.writeFile(file, data, function(err) {
+  fs.writeFile(file, data, (err) => {
     if (err) throw err
     console.log('All users saved: ', file)
   })
 }
 
-var copyFile = function(src, dst) {
+var copyFile = (src, dst)  => {
   fs.createReadStream(src).pipe(fs.createWriteStream(dst));
 }
 
-var copyUserImage = function(srcBig, srcSmall) {
-  return function(user) {
-    copyFile(srcBig, 'public/profilepics/' + user.username + '_bg.png')
-    copyFile(srcSmall, 'public/profilepics/' + user.username + '_sm.png')
-  }
+var copyUserImage = (srcBig, srcSmall) => (user) => {
+  copyFile(srcBig, 'public/profilepics/' + user.username + '_bg.png')
+  copyFile(srcSmall, 'public/profilepics/' + user.username + '_sm.png')
 }
 
 var users = createUsers()
